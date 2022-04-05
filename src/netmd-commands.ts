@@ -64,9 +64,19 @@ export interface Device {
     name: string;
 }
 export async function listDevice(usb: USB) {
-    let filters = DevicesIds.map(({ vendorId, deviceId }) => ({ vendorId, deviceId }));
-    let device = await usb.requestDevice({ filters });
-    let id = DevicesIds.find(did => {
+    // https://stackoverflow.com/a/42015100/1872200
+    // await usb.requestDevice({ filters: [] });
+    // //console.log(devices);
+    // const devices = await usb.getDevices();
+    // devices.forEach(d => {
+    //     console.log(`venderId: ${d.vendorId}, deviceId: ${d.productId}\n`)
+    // });
+
+    const filters = DevicesIds.map(({ vendorId, deviceId }) => ({ vendorId, deviceId }));
+    const device = await usb.requestDevice({ filters });
+    console.log(`venderId: 0x${device.vendorId.toString(16)}, deviceId: 0x${device.productId.toString(16)}\n`)
+
+    const id = DevicesIds.find(did => {
         return did.deviceId == device.productId && did.vendorId === device.vendorId;
     });
 
@@ -145,10 +155,10 @@ export async function getDeviceStatus(mdIface: NetMDInterface): Promise<DeviceSt
 
     const time = position
         ? {
-              minute: position[2],
-              second: position[3],
-              frame: position[4],
-          }
+            minute: position[2],
+            second: position[3],
+            frame: position[4],
+        }
         : null;
 
     return {

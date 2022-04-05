@@ -50,9 +50,9 @@ export async function* getAsyncPacketIterator({
         currentChunkSize = Math.min(currentChunkSize, uint8DataArray.length - offset);
 
         const dataChunk = uint8DataArray.subarray(offset, offset + currentChunkSize);
-        const dataChunkWA = Crypto.lib.WordArray.create(dataChunk) as any;
+        const dataChunkWA = Crypto.lib.WordArray.create(dataChunk);
 
-        let encryptedChunk = Crypto.DES.encrypt(dataChunkWA, rawKeyWA, {
+        let encryptedChunk = Crypto.DES.encrypt(dataChunkWA, rawKeyWA as any, {
             mode: Crypto.mode.CBC,
             iv: ivWA,
         });
