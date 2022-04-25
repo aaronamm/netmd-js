@@ -40,7 +40,7 @@ async function main() {
         .command(
             'devices',
             'list devices',
-            yargs => {},
+            yargs => { },
             async argv => {
                 let device = await listDevice(usb);
                 printDevice(device);
@@ -168,7 +168,7 @@ async function main() {
         .command(
             'wipe',
             'erase the disc',
-            yargs => {},
+            yargs => { },
             async argv => {
                 let netmdInterface = await openDeviceOrExit(usb);
                 await netmdInterface.eraseDisc();
@@ -177,7 +177,7 @@ async function main() {
         .command(
             'ls',
             'list device content',
-            yargs => {},
+            yargs => { },
             async argv => {
                 let netmdInterface = await openDeviceOrExit(usb);
                 let content = await listContent(netmdInterface);
@@ -282,8 +282,7 @@ async function main() {
 
                 const outfile =
                     argv.outputfile ||
-                    `${await netmdInterface.getTrackTitle(argv.track_number)}.${
-                        [DiscFormat.lp2, DiscFormat.lp4].includes(format) ? 'wav' : 'aea'
+                    `${await netmdInterface.getTrackTitle(argv.track_number)}.${[DiscFormat.lp2, DiscFormat.lp4].includes(format) ? 'wav' : 'aea'
                     }`;
 
                 fs.writeFileSync(outfile, data);
@@ -373,8 +372,7 @@ function printDisc(disc: Disc) {
         }
         for (let t of g.tracks) {
             console.log(
-                `${g.title !== null ? '  ' : ''}${pad(t.index, '000')}: ${formatTimeFromFrames(t.duration)} - ${Flag[t.protected]} ${
-                    EncodingName[t.encoding]
+                `${g.title !== null ? '  ' : ''}${pad(t.index, '000')}: ${formatTimeFromFrames(t.duration)} - ${Flag[t.protected]} ${EncodingName[t.encoding]
                 } ${ChannelName[t.channel]} - ${t.title} | ${t.fullWidthTitle}`
             );
         }
